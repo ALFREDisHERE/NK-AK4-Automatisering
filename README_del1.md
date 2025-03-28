@@ -23,7 +23,7 @@ Python-skript for å konfigurere nettverksenheter via en en com kabel
 1. Koble til enheten via en com port.
 2. Kjør skriptet:
    ```bash
-   python ak4_ssh_ver10.py
+   python ./ak4_ssh_ver10.py
    ```
 3. Følg instruksjonene for å sette opp SSH, konfiguere porter og VLAN.
 
