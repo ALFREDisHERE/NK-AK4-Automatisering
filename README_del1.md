@@ -1,34 +1,38 @@
-# NK-AK4-Automatisering
 
-Konfigureringsskript for Nettverksenheter
+# Konfigureringsskript for Nettverksenheter - NK-AK4-Automatisering
 
-Dette prosjektet inneholder et Python-skript for å konfigurere nettverksenheter via en seriell tilkobling. Skriptet kan brukes til å sette opp SSH, konfigurere porter og opprette VLAN.
+Python-skript for å konfigurere nettverksenheter via en en com kabel
 
-Funksjonalitet
+## Funksjonalitet
+- **SSH-konfigurasjon**: Oppretter hostname, domene, RSA-nøkkel, og brukerkonto.
+- **Portkonfigurasjon**: Støtte for ruter- og switchporter.
+- **VLAN-konfigurasjon**: Oppretter VLAN, tildeler IP-adresser og setter opp default gateway.
 
-SSH-konfigurasjon: Oppretter hostname, domene, RSA-nøkkel, og brukerkonto.
+## Installasjon
+1. Klon dette repoet:
+   ```bash
+   git clone https://github.com/ALFREDisHERE/NK-AK4-Automatisering
+   cd nettverkskonfig
+   ```
+2. Installer nødvendige Python-avhengigheter:
+   ```bash
+   pip install pyserial
+   ```
 
-Portkonfigurasjon: Støtte for ruter- og switchporter.
+## Bruk
+1. Koble til enheten via en com port.
+2. Kjør skriptet:
+   ```bash
+   python ak4_ssh_ver10.py
+   ```
+3. Følg instruksjonene for å sette opp SSH, konfiguere porter og VLAN.
 
-VLAN-konfigurasjon: Oppretter VLAN, tildeler IP-adresser og setter opp default gateway.
+## Krav
+- Python 3
+- `pyserial`
+- En ciscoenhet med en com tilkobling 
 
-Installasjon
 
-Klon dette repoet:
+## Kontakt
+For spørsmål eller tilbakemeldinger, kontakt [din e-post] eller opprett en issue i repoet.
 
-git clone https://github.com/dittbrukernavn/nettverkskonfig.git
-cd nettverkskonfig
-
-Installer nødvendige Python-avhengigheter:
-
-pip install pyserial
-
-Bruk
-
-Koble til enheten via en seriell port.
-
-Kjør skriptet:
-
-python konfigurasjon.py
-
-Følg instruksjonene for å sette opp SSH, porter og VLAN.
