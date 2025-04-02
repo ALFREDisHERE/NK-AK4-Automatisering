@@ -26,9 +26,7 @@ def configure_ssh(ser, hostname, username, password): #setter opp SSH
     send_command(ser, "line vty 0 4")
     send_command(ser, "transport input ssh")
     send_command(ser, "login local")
-    send_command(ser, "exit")
-    send_command(ser, "exit")
-    send_command(ser, "exit")
+    send_command(ser, "end")
     print("SSH-konfigurasjon fullført!")
 
 def configure_port(ser): #her kan man konfiguere port
@@ -48,6 +46,7 @@ def configure_port(ser): #her kan man konfiguere port
         vlan_id = get_input("Skriv VLAN-ID")
         none_subint = get_input("navnet på porten som skal skrues på (ikke ha med subint)") #den her må være her slik at det kan kjøres no shutdown på porten hvis det er valgt subinterface
         if ip and mask and vlan_id: 
+            send_command(ser, "")
             send_command(ser, "exit")
             send_command(ser, "exit")
             send_command(ser, "vlan database") #legger til vlan i database
@@ -62,16 +61,15 @@ def configure_port(ser): #her kan man konfiguere port
             send_command(ser, f"ip address {ip} {mask}")
             send_command(ser, "no shutdown")
             print(f"Port {port} konfigurert som ruterport med IP {ip}/{mask}")
-            send_command(ser, "exit")
-            send_command(ser, "exit")
+            send_command(ser, "end")
     elif port_type == "switch":
         vlan_id = get_input("Skriv inn VLAN ID for som skal være allowed (hopp over for vanlig trunk)")
         send_command(ser, "switchport mode trunk")
         if vlan_id: 
             send_command(ser, f"switchport trunk allowed vlan {vlan_id}")
         print(f"Port {port} satt i trunk mode.")
+        send_command(ser, "end")
     
-    send_command(ser, "exit")
     print("Portkonfigurasjon fullført!")
 
 def configure_vlan(ser): #her kan du legge til vlan :D
@@ -98,6 +96,7 @@ def configure_vlan(ser): #her kan du legge til vlan :D
         send_command(ser, f"ip default-gateway {default_gateway}")
         print(f"Default gateway satt til {default_gateway}")
     print(f"VLAN {vlan_id} konfigurert med IP {ip_address}/{subnet_mask}.")
+    send_command(ser, "end")
 
 def main(): #her er main :D
     com_port = input("Skriv inn COM-port du ønsker å bruke (f.eks. COM6): ").strip() #her blir bruker spurt om hvliken com port som skal brukes
