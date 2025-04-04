@@ -37,6 +37,40 @@
 - For meg fungerte ikke ansible-pylibssh så det gikk altid over til paramiko, denne prosessen er automatisk så om du får en feilmelding om dette kan du ignorere.
 
 ---
+## skript forklaringer
+### 'hosts.yml'
+Ansible inventory-fil som bruker yml
+- Deler opp enhetene i `routers` og `switches`.
+- Setter brukernavn, passord og OS-type (`ios`) for alle enheter. (om du har andre brukernavn og passord er det viktig du endrer det her)
+- Viktig for at Ansible vet hvor og hvordan det skal koble seg til
+
+### `rr1.yml` 
+Konfigurerer RR1 med som standard:
+- **HSRP**: Setter opp gateway-redundans med høyere prioritet.
+- **OSPF**: Setter opp ruting i Area 0 med `router-id 1.1.1.1`.
+- **DHCP**: Oppretter DHCP-pooler for VLAN 10 og VLAN 5. Setter `RR1` som hoved-DHCP-server.
+Du kan endre på ting i ruter_vars.yml slik du får det oppsette du ønsker.
+
+### `switch_playbook.yml`
+Brukes til å sette opp **EtherChannel** mellom SR3 og SG3:
+- Konfigurerer portene `Gig1/0/1` og `Gig1/0/2` på begge switcher som del av en port-channel.
+- Setter trunk-modus og kanalgruppe med `mode active` (LACP).
+- Bruker informasjon definert i `switch_vars.yml`.
+Samme som med rr1.yml så kan du endre på switch_vars.yml for å sette opp det oppsettet som passer deg best.
+
+### `ruter_vars.yml`
+Variabeldefinisjoner for RR1:
+- IP-adresser, OSPF router-ID, HSRP-prioriteter og DHCP-konfig er samlet her.
+- Dette gjør playbooks mer lesbare og gjenbrukbare.
+
+### `switch_vars.yml`
+Variabler for EtherChannel-oppsettet på SR3 og SG3:
+- Hvilke porter som skal brukes
+- VLAN
+- Port-channel-ID og trunk-status (jeg fant det enklere å sette opp trunking med python skriptet, men det skal funke her også)
+
+### `site.yml`
+Prøvde å bruke denne for å kjøre alle skriptene samtidig med det fungerte ikke. (stort sett laget av ChatGPT inkluderer det i tilfelle noen ønsker å prøve det ut å får det til å fungere)
 
 ## Bruk
 
@@ -73,6 +107,7 @@ ansible-playbook -i hosts.yml switch_playbook.yml
 - **SR3 og SG3:** EtherChannel trunk via `Gig1/0/1` og `Gig1/0/2`
 
 ---
+
 Dissclosure: det kommer errorer når du kjører switchskriptet fordi den prøver å gjøre endringer på SR1 og SR2 men jeg har ikke noen endringer å kjøre så du får noen skummle errorer men bare å ignorere.
 
 Tips: noen av ruterene på labben bruker en gammel versjon av SSH. her er SSH kommandoer jeg måtte bruke:
