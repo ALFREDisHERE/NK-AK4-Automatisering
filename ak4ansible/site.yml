@@ -1,4 +1,5 @@
 ### Fil: site.yml
+### den er veldig enkel og burde fungere men det feiler idk why
 - name: Kjør full konfigurasjon
   hosts: routers
   gather_facts: no
