@@ -24,19 +24,49 @@ Koble til enheten via en com port.
 Om du ikke hvet hva comport den bruker kan du trykke Win+X>enhetsbehandling>porter(com og LPT) der finner du liste over alle tilgjenglige com porter som du kan bruke. 
 Antall porter varierer veldig fra pc til pc.
 
-## For å bruke skriptet må du vite noen ting først:
-- du kan ikke gjøre flere endringer på samme session av skriptet
-  -- eksempel: om du kjører det og setter opp ssh så kan du ikke gjøre noen port/vlan endringer i samme session, så da må du kjøre skriptet igjen å velge nei på ssh og da gjøre endringer på port eller vlan.
--- dette gjelder også 2 porter, 2 vlan, osv
--- kort forklart. bare kjør skriptet hver gang du skal konfiguere noe og skriv skip på alt anna.
--du må gå inn på enheten å forsikre deg at den ikke står å venter på global configuration. om den gjør det skriv no og vent noen minutter.
--du kan ikke ha oppe en putty session på samme comport samtidg som skriptet kjøres
--pass på at den er på pre enable planet i startet
--- eksempel: det må stå switch> eller router> eller noe lignene i konsollen (helst uten at den er enabled altså der er e #)
--- det funker av og til uten om dette men det er best å være på den sikre siden.
--- det er av og til den står i det jeg liker å kalle pre default planet der den står å venter på input på bruker, jeg har prøvd å sende en empty command som sender bare enter men det funket ikke, så om ingen endringer skjer kan du koble til over serial og trykke enter en gang :D.
-- om du sitter fast kan du se demovideoen nedenfor som demostrerer hvordan jeg satt opp RR2 (en ruter) legg merke til når jeg skipper og når jeg kjører skriptet på nytt.
-- for dypere forklaring av koden sjekk kommentarene i skriptet
+## ⚠️ Før du bruker skriptet – viktig å vite:
+
+### Kjør kun én endring per skript-session
+- Du kan **ikke gjøre flere endringer i samme kjøring** av skriptet.
+  - Eksempel: Hvis du konfigurerer SSH, må du kjøre skriptet på nytt for å gjøre VLAN- eller port-endringer.
+  - Dette gjelder også dersom du skal endre **flere porter** eller **flere VLAN-er** – én ting av gangen!
+- **Kort oppsummert:** Hver gang du skal gjøre en ny endring, kjør skriptet på nytt og svar `skip` på alle de andre spørsmålene.
+
+---
+
+### Sjekk at enheten ikke står i global config mode
+- Gå inn på enheten manuelt og sørg for at den ikke er i global config (`Switch(config)#`).
+- Hvis den er det, skriv `no` for å gå ut og vent noen sekunder før du kjører skriptet.
+
+---
+
+### Ikke ha PuTTY åpen samtidig
+- Du kan **ikke ha en PuTTY-tilkobling oppe på samme COM-port** samtidig som skriptet kjører.
+- Lukk PuTTY helt hvis du bruker den samme COM-porten som skriptet skal koble seg til.
+
+---
+
+### Start alltid i pre-enable prompt
+- Det skal stå noe som `Switch>` eller `Router>` i konsollen, altså **ikke** `Switch#` eller `Router(config)#`.
+- Det **kan fungere** uten dette, men det er tryggest å begynne her.
+
+---
+
+### Hvis skriptet "henger"
+- Noen ganger venter enheten på brukernavn eller passord i det som kan kalles en "pre-default state".
+- I så fall må du koble til via serial og trykke `Enter` én gang – da kommer den i riktig tilstand.
+
+---
+
+### Se video
+- Hvis du står fast, se **demovideoen nederst i README** der jeg viser hvordan jeg satte opp RR2.
+  - Legg merke til når jeg **skipper** steg og når jeg **kjører skriptet på nytt**.
+
+---
+
+### For dypere innsikt
+- Alle skript er kommentert – se kommentarene i koden for forklaringer på hva som skjer og hvorfor.
+
 
 Kjør skriptet:
    ```bash
