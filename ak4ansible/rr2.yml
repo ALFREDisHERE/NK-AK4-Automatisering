@@ -1,0 +1,24 @@
+### Fil: rr2.
+- name: Konfigurer RR2
+  hosts: RR2
+  gather_facts: no
+  tasks:
+    - name: Konfigurer HSRP
+      ios_config:
+        parents: interface GigabitEthernet0/1.5
+        lines:
+          - standby 1 ip 192.168.1.1
+          - standby 1 priority 105
+    - name: hsrp2
+      ios_config:
+        parents: interface GigabitEthernet0/0.10
+        lines:
+          - standby 2 ip 192.168.0.4
+          - standby 2 priority 105
+    - name: Konfigurer OSPF
+      ios_config:
+        lines:
+          - router-id 2.2.2.2
+          - network 192.168.0.0 0.0.0.255 area 0
+          - network 192.168.1.0 0.0.0.255 area 0
+        parents: router ospf 1

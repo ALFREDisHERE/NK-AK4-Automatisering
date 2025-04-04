@@ -1,0 +1,10 @@
+### Fil: site.yml
+- name: Kjør full konfigurasjon
+  hosts: routers
+  gather_facts: no
+  tasks:
+    - name: Inkluder RR1 playbook
+      import_playbook: rr1.yml
+
+    - name: Inkluder RR2 playbook
+      import_playbook: rr2.yml

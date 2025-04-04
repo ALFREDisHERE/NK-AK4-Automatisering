@@ -1,0 +1,20 @@
+- name: Konfigurer EtherChannel på switcher
+  hosts: switches
+  gather_facts: no
+  vars_files:
+    - switch_vars.yml
+  tasks:
+    - name: Konfigurer EtherChannel-grensesnitt
+      ios_config:
+        lines:
+          - interface Port-channel{{ switches[inventory_hostname].etherchannel.port_channel }}
+          - switchport mode trunk
+          - switchport trunk allowed vlan 5,20
+          - no shutdown
+
+    - name: Legg til fysiske porter i EtherChannel
+      ios_config:
+        lines:
+          - channel-group {{ switches[inventory_hostname].etherchannel.port_channel }} mode {{ switches[inventory_hostname].etherchannel.mode }}
+        parents: interface {{ item }}
+      loop: "{{ switches[inventory_hostname].etherchannel.interfaces }}"

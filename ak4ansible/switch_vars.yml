@@ -1,0 +1,18 @@
+switches:
+  SR3:
+    ansible_host: 192.168.1.11
+    etherchannel:
+      port_channel: 1
+      mode: active  # LACP
+      interfaces:
+        - GigabitEthernet1/0/1
+        - GigabitEthernet1/0/2
+
+  SG3:
+    ansible_host: 192.168.1.12
+    etherchannel:
+      port_channel: 1
+      mode: active  # LACP
+      interfaces:
+        - GigabitEthernet1/0/1
+        - GigabitEthernet1/0/2

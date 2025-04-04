@@ -1,0 +1,40 @@
+### Fil: rr1_playbook.yml
+- name: Konfigurer RR1
+  hosts: RR1
+  gather_facts: no
+  vars_files:
+    - ruter_vars.yml
+  tasks:
+    - name: Konfigurer HSRP
+      ios_config:
+        parents: interface {{ routers.RR1.hsrp.interface}}
+        lines:
+          - standby 1 ip {{ routers.RR1.hsrp.vip }}
+          - standby 1 priority {{ routers.RR1.hsrp.priority }}
+          - standby 1 preempt
+    - name: HSRP2
+      ios_config:
+        parents: interface {{routers.RR1.hsrp2.interface}}
+        lines:
+          - standby 2 ip {{routers.RR1.hsrp2.vip}}
+          - standby 2 priority {{routers.RR1.hsrp2.priority}}
+          - standby 2 preempt
+    - name: Konfigurer OSPF
+      ios_config:
+        lines:
+          - router-id {{ routers.RR1.ospf_router_id }}
+          - network 192.168.0.0 0.0.0.255 area 0
+          - network 192.168.1.0 0.0.0.255 area 0
+        parents: router ospf 1
+
+    - name: Konfigurer DHCP
+      ios_config:
+        lines:
+          - ip dhcp excluded-address 192.168.0.1 192.168.0.2
+          - ip dhcp excluded-address 192.168.1.1 192.168.1.3
+          - ip dhcp pool VLAN10_POOL
+          - network 192.168.0.0 255.255.255.0
+          - default-router 192.168.0.1
+          - ip dhcp pool VLAN5_POOL
+          - network 192.168.1.0 255.255.255.0
+          - default-router 192.168.1.1
