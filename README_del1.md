@@ -27,8 +27,8 @@ Antall porter varierer veldig fra pc til pc.
 ## For å bruke skriptet må du vite noen ting først:
 - du kan ikke gjøre flere endringer på samme session av skriptet
   -- eksempel: om du kjører det og setter opp ssh så kan du ikke gjøre noen port/vlan endringer i samme session, så da må du kjøre skriptet igjen å velge nei på ssh og da gjøre endringer på port eller vlan.
-  -- dette gjelder også 2 porter, 2 vlan, osv
-  -- kort forklart. bare kjør skriptet hver gang du skal konfiguere noe og skriv skip på alt anna.
+-- dette gjelder også 2 porter, 2 vlan, osv
+-- kort forklart. bare kjør skriptet hver gang du skal konfiguere noe og skriv skip på alt anna.
 -du må gå inn på enheten å forsikre deg at den ikke står å venter på global configuration. om den gjør det skriv no og vent noen minutter.
 -du kan ikke ha oppe en putty session på samme comport samtidg som skriptet kjøres
 -pass på at den er på pre enable planet i startet
