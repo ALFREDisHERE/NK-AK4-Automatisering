@@ -30,4 +30,9 @@ Python-skript for å konfigurere nettverksenheter via en en com kabel
 ## Krav
 - Python 3
 - `pyserial`
-- En ciscoenhet med en com tilkobling 
+- En ciscoenhet med en com tilkobling
+
+Demo Video
+
+https://github.com/user-attachments/assets/2e522031-380f-4253-be28-b8af3ec9ca20
+
