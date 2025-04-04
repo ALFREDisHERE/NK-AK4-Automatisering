@@ -1,4 +1,5 @@
 ### Fil: rr2.
+### er hardcoda om du vil sette opp 2 forskjellige rutere er det bedre å heller endre på vars å kjøre RR1 2 ganger
 - name: Konfigurer RR2
   hosts: RR2
   gather_facts: no
